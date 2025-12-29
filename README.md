@@ -85,25 +85,6 @@ Edit `popup.js`, modify the `RATES` object:
 ```javascript
 let RATES = {
     RM: 9.8,      // 1 RM to OC
-    OC: 0.102040816  // 1 OC to RM
+    OC: 0.10  // 1 OC to RM
 };
 ```
-
-## Comparison with Original
-
-**Removed Features:**
-- Conversion history
-- History storage (localStorage)
-- Clear history button
-- History list display
-- Timestamp tracking
-
-**Optimized:**
-- Smaller popup size (380px width)
-- Faster load time
-- Minimal storage usage
-- Chrome extension APIs instead of localStorage
-
-## License
-
-Free to use and modify.

@@ -5,15 +5,14 @@ const state = {
 
 let isUpdating = false;
 
-let RATES = {
-    RM: 9.8,
-    OC: 0.102040816
-};
+let RATES = { ...DEFAULT_RATES };
 
 function loadRates() {
     chrome.storage.local.get(['rates'], (result) => {
         if (result.rates) {
             RATES = result.rates;
+        } else {
+            RATES = { ...DEFAULT_RATES };
         }
         updateRateDisplay();
     });

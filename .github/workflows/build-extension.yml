@@ -1,0 +1,79 @@
+name: Build Chrome Extension
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Get version from manifest
+        id: get_version
+        run: |
+          VERSION=$(grep -o '"version": "[^"]*"' manifest.json | cut -d'"' -f4)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extension version: $VERSION"
+      
+      - name: Create extension package
+        run: |
+          # Create a clean directory for the package
+          mkdir -p extension-package
+          
+          # Copy all necessary files (exclude development files)
+          cp manifest.json extension-package/
+          cp popup.html extension-package/
+          cp popup.js extension-package/
+          cp rates.js extension-package/
+          cp styles.css extension-package/
+          cp icon*.png extension-package/
+          
+          # Include LICENSE if it exists (required for Chrome Web Store)
+          [ -f LICENSE ] && cp LICENSE extension-package/ || true
+          
+          # Create zip file
+          cd extension-package
+          zip -r ../extension-v${{ steps.get_version.outputs.version }}.zip .
+          cd ..
+          
+          # Display package contents
+          echo "Package contents:"
+          unzip -l extension-v${{ steps.get_version.outputs.version }}.zip
+      
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-extension-v${{ steps.get_version.outputs.version }}
+          path: extension-v${{ steps.get_version.outputs.version }}.zip
+          retention-days: 90
+      
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/heads/main')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: extension-v${{ steps.get_version.outputs.version }}.zip
+          tag_name: v${{ steps.get_version.outputs.version }}
+          name: Release v${{ steps.get_version.outputs.version }}
+          body: |
+            Chrome Extension build for version ${{ steps.get_version.outputs.version }}
+            
+            ## Installation
+            1. Download the `extension-v${{ steps.get_version.outputs.version }}.zip` file
+            2. Extract the zip file
+            3. Go to `chrome://extensions/`
+            4. Enable "Developer mode"
+            5. Click "Load unpacked" and select the extracted folder
+            
+            ## Chrome Web Store Upload
+            Use the zip file to upload to the Chrome Web Store.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RM ↔ OC Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="converter">
+            <div class="inputs-container">
+                <div class="input-row">
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <div class="currency-label" id="fromCurrency" data-currency="RM">RM</div>
+                            <input 
+                                type="number" 
+                                id="fromAmount" 
+                                placeholder="0.00"
+                                step="0.01"
+                                min="0"
+                            >
+                            <button class="clear-input-btn" id="clearFromBtn">×</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <div class="currency-label" id="toCurrency" data-currency="OC">OC</div>
+                            <input 
+                                type="number" 
+                                id="toAmount" 
+                                placeholder="0.00"
+                                step="0.01"
+                                min="0"
+                            >
+                            <button class="clear-input-btn" id="clearToBtn">×</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result" id="result">Enter an amount to convert</div>
+
+            <div class="rates-section">
+                <div class="rates-display">
+                    <div class="rate-item">1 RM = <span id="rmRateDisplay">9.80</span> OC</div>
+                    <div class="rate-item">1 OC = <span id="ocRateDisplay">0.10</span> RM</div>
+                </div>
+                <button class="edit-rates-btn" id="editRatesBtn">Edit Rates</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="ratesModal">
+        <div class="modal">
+            <h2>Edit Conversion Rates</h2>
+            <div class="modal-content">
+                <div class="modal-input-group">
+                    <label for="rmRateInput">1 RM equals how many OC?</label>
+                    <input type="number" id="rmRateInput" step="0.01" min="0">
+                </div>
+                <div class="modal-input-group">
+                    <label for="ocRateInput">1 OC equals how many RM?</label>
+                    <input type="number" id="ocRateInput" step="0.01" min="0">
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" id="cancelRatesBtn">Cancel</button>
+                <button class="modal-btn save" id="saveRatesBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

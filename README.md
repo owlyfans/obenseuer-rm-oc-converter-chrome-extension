@@ -12,7 +12,11 @@ A simple and elegant Chrome extension for converting between RM and OC currencie
 
 ## Installation
 
-### Method 1: Load Unpacked Extension (For Development/Testing)
+### Method 1: Download from Chrome Web Store
+1. Open Chrome or Chromium web browther and navigate to `https://chromewebstore.google.com/detail/rm-%E2%86%94-oc-currency-converte/odbgdmpgiakfnkmkngefbppjoelojcfb`
+2. Click "Add to Chrome" (Chrome may be replaced with the name of your chromium web browther)
+
+### Method 2: Load Unpacked Extension (For Development/Testing)
 
 1. Open Chrome and navigate to `chrome://extensions/`
 2. Enable "Developer mode" in the top right corner
